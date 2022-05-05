@@ -11,12 +11,12 @@ import ARKit
 
 struct ContentView : View {
     @State private var isPlacementEnabled = false
-    @State private var selectedModel: String?
-    @State private var modelConfirmedForPlacement: String?
+    @State private var selectedModel: Model?
+    @State private var modelConfirmedForPlacement: Model?
     
     
     
-    private var models: [String] = {
+    private var models: [Model] = {
        //dynamicly get our model filename
         let fileManager = FileManager.default
         
@@ -24,10 +24,14 @@ struct ContentView : View {
             return []
         }
         
-        var availableModel: [String] = []
+        var availableModel: [Model] = []
         for fileName in files where fileName.hasSuffix("usdz") {
             let modelName = fileName.replacingOccurrences(of: ".usdz", with: "")
-            availableModel.append(modelName)
+            let model = Model(modelName: modelName)
+            
+            availableModel.append(model)
+            
+            
         }
         
         return availableModel
@@ -48,7 +52,7 @@ struct ContentView : View {
 }
 
 struct ARViewContainer: UIViewRepresentable {
-    @Binding var modelConfirmedForPlacement: String?
+    @Binding var modelConfirmedForPlacement: Model?
     
     func makeUIView(context: Context) -> ARView {
         
@@ -69,19 +73,19 @@ struct ARViewContainer: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: ARView, context: Context) {
-        if let modelName = self.modelConfirmedForPlacement {
-            print("DEBUG: adding model to scene = \(modelName)")
+        if let model = self.modelConfirmedForPlacement {
+            if let modelEntity = model.modelEntity {
+                print("DEBUG: adding model to scene = \(model.modelName)")
+                
+                let anchorEntity = AnchorEntity(plane: .any)
+                anchorEntity.addChild(modelEntity)
+                
+                uiView.scene.addAnchor(anchorEntity)
+            } else {
+                print("DEBUG: unable to load model to model entity for modelname = \(model.modelName)")
+            }
             
-            let fileName = modelName + ".usdz"
-            
-            let modelEntity = try! ModelEntity.loadModel(named: fileName)
-            
-            
-            let anchorEntity = AnchorEntity()
-            anchorEntity.addChild(modelEntity)
-            
-            uiView.scene.addAnchor(anchorEntity)
-            
+           
             DispatchQueue.main.async {
                 self.modelConfirmedForPlacement = nil
             }
@@ -92,8 +96,8 @@ struct ARViewContainer: UIViewRepresentable {
 
 struct PlacementButtonsView: View {
     @Binding var isPlacementEnabled: Bool
-    @Binding var selectedModel: String?
-    @Binding var modelConfirmedForPlacement: String?
+    @Binding var selectedModel: Model?
+    @Binding var modelConfirmedForPlacement: Model?
     
     var body: some View {
         HStack {
@@ -136,9 +140,9 @@ struct PlacementButtonsView: View {
 
 struct ModelPickerView: View {
     @Binding var isPlacementEnabled: Bool
-    @Binding var selectedModel: String?
+    @Binding var selectedModel: Model?
     
-    var models: [String]
+    var models: [Model]
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false){
@@ -150,7 +154,7 @@ struct ModelPickerView: View {
                         self.selectedModel = self.models[index]
                         self.isPlacementEnabled = true
                     }){
-                        Image(uiImage: UIImage(named: models[index])!)
+                        Image(uiImage: self.models[index].image)
                             .resizable()
                             .frame(height: 80)
                             .aspectRatio(1/1, contentMode: .fit)
