@@ -7,6 +7,7 @@
 
 import SwiftUI
 import RealityKit
+import ARKit
 
 struct ContentView : View {
     @State private var isPlacementEnabled = false
@@ -53,6 +54,16 @@ struct ARViewContainer: UIViewRepresentable {
         
         let arView = ARView(frame: .zero)
         
+        let config = ARWorldTrackingConfiguration()
+        config.planeDetection = [.horizontal, .vertical]
+        config.environmentTexturing = .automatic
+        
+        if ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh){
+            config.sceneReconstruction = .mesh
+        }
+        
+        arView.session.run(config)
+        
         return arView
         
     }
@@ -60,6 +71,16 @@ struct ARViewContainer: UIViewRepresentable {
     func updateUIView(_ uiView: ARView, context: Context) {
         if let modelName = self.modelConfirmedForPlacement {
             print("DEBUG: adding model to scene = \(modelName)")
+            
+            let fileName = modelName + ".usdz"
+            
+            let modelEntity = try! ModelEntity.loadModel(named: fileName)
+            
+            
+            let anchorEntity = AnchorEntity()
+            anchorEntity.addChild(modelEntity)
+            
+            uiView.scene.addAnchor(anchorEntity)
             
             DispatchQueue.main.async {
                 self.modelConfirmedForPlacement = nil
