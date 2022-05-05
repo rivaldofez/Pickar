@@ -9,29 +9,30 @@ import SwiftUI
 import RealityKit
 
 struct ContentView : View {
-    var models: [String] = ["fender_stratocaster", "flower_tulip", "lemon_meringue_pie", "toy_biplane", "wateringcan"]
+    private var models: [String] = {
+       //dynamicly get our model filename
+        let fileManager = FileManager.default
+        
+        guard let path = Bundle.main.resourcePath, let files = try? fileManager.contentsOfDirectory(atPath: path) else {
+            return []
+        }
+        
+        var availableModel: [String] = []
+        for fileName in files where fileName.hasSuffix("usdz") {
+            let modelName = fileName.replacingOccurrences(of: ".usdz", with: "")
+            availableModel.append(modelName)
+        }
+        
+        return availableModel
+    }()
     
     var body: some View {
         ZStack(alignment: .bottom) {
             ARViewContainer()
             
-            ScrollView(.horizontal, showsIndicators: false){
-                HStack(spacing: 30) {
-                    ForEach(0 ..< self.models.count){ index in
-                        Button(action: {
-                            print("DEBUG : selected model with name \(models[index])")
-                        }){
-                            Image(uiImage: UIImage(named: models[index])!)
-                                .resizable()
-                                .frame(height: 80)
-                                .aspectRatio(1/1, contentMode: .fit)
-                                .background(Color.white)
-                                .cornerRadius(12)
-                        }.buttonStyle(PlainButtonStyle())
-                    }
-                }
-            }
-            .padding(20)
+//            ModelPickerView(models: self.models)
+            
+            
         }
     }
 }
@@ -49,6 +50,32 @@ struct ARViewContainer: UIViewRepresentable {
     func updateUIView(_ uiView: ARView, context: Context) {}
     
 }
+
+struct ModelPickerView: View {
+    var models: [String]
+    
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false){
+            HStack(spacing: 30) {
+                ForEach(0 ..< self.models.count, id: \.self){ index in
+                    Button(action: {
+                        print("DEBUG : selected model with name \(models[index])")
+                    }){
+                        Image(uiImage: UIImage(named: models[index])!)
+                            .resizable()
+                            .frame(height: 80)
+                            .aspectRatio(1/1, contentMode: .fit)
+                            .background(Color.white)
+                            .cornerRadius(12)
+                    }.buttonStyle(PlainButtonStyle())
+                }
+            }
+        }
+        .padding(20)
+        .background(Color.black.opacity(0.5))
+    }
+}
+
 
 #if DEBUG
 struct ContentView_Previews : PreviewProvider {
