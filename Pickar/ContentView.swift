@@ -59,7 +59,6 @@ struct ARViewContainer: UIViewRepresentable {
         
 //        let arView = ARView(frame: .zero)
         let arView = FocusARView(frame: .zero)
-        
         return arView
         
     }
@@ -99,7 +98,7 @@ class FocusARView: ARView {
   }
 
   /// Style to be displayed in the example
-  let focusStyle: FocusStyleChoices = .classic
+  let focusStyle: FocusStyleChoices = .color
   var focusEntity: FocusEntity?
     
     
