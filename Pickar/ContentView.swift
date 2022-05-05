@@ -32,6 +32,31 @@ struct ContentView : View {
             
 //            ModelPickerView(models: self.models)
             
+            HStack {
+                //cancel button
+                Button(action: {
+                    print("DEBUG: model replacement canceled")
+                }){
+                    Image(systemName: "xmark")
+                        .frame(width:60, height: 60)
+                        .font(.title)
+                        .background(Color.white.opacity(0.75))
+                        .cornerRadius(30)
+                        .padding(20)
+                }
+                
+                //confirm button
+                Button(action: {
+                    print("DEBUG: model replacement confirmed")
+                }){
+                    Image(systemName: "checkmark")
+                        .frame(width:60, height: 60)
+                        .font(.title)
+                        .background(Color.white.opacity(0.75))
+                        .cornerRadius(30)
+                        .padding(20)
+                }
+            }
             
         }
     }
