@@ -10,7 +10,7 @@
 		7E49E13328244B22009F4C5D /* fender_stratocaster.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 7E49E12E28244B21009F4C5D /* fender_stratocaster.usdz */; };
 		7E49E13428244B22009F4C5D /* wateringcan.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 7E49E12F28244B21009F4C5D /* wateringcan.usdz */; };
 		7E49E13528244B22009F4C5D /* flower_tulip.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 7E49E13028244B21009F4C5D /* flower_tulip.usdz */; };
-		7E49E13628244B22009F4C5D /* LemonMeringuePie.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 7E49E13128244B22009F4C5D /* LemonMeringuePie.usdz */; };
+		7E49E13628244B22009F4C5D /* lemon_meringue_pie.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 7E49E13128244B22009F4C5D /* lemon_meringue_pie.usdz */; };
 		7E49E13728244B22009F4C5D /* toy_biplane.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 7E49E13228244B22009F4C5D /* toy_biplane.usdz */; };
 		7EBE2EE02822CC83006A12CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBE2EDF2822CC83006A12CF /* AppDelegate.swift */; };
 		7EBE2EE22822CC83006A12CF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EBE2EE12822CC83006A12CF /* ContentView.swift */; };
@@ -22,7 +22,7 @@
 		7E49E12E28244B21009F4C5D /* fender_stratocaster.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = fender_stratocaster.usdz; sourceTree = "<group>"; };
 		7E49E12F28244B21009F4C5D /* wateringcan.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = wateringcan.usdz; sourceTree = "<group>"; };
 		7E49E13028244B21009F4C5D /* flower_tulip.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = flower_tulip.usdz; sourceTree = "<group>"; };
-		7E49E13128244B22009F4C5D /* LemonMeringuePie.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = LemonMeringuePie.usdz; sourceTree = "<group>"; };
+		7E49E13128244B22009F4C5D /* lemon_meringue_pie.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = lemon_meringue_pie.usdz; sourceTree = "<group>"; };
 		7E49E13228244B22009F4C5D /* toy_biplane.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = toy_biplane.usdz; sourceTree = "<group>"; };
 		7EBE2EDC2822CC83006A12CF /* Pickar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pickar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EBE2EDF2822CC83006A12CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -47,7 +47,7 @@
 			children = (
 				7E49E12E28244B21009F4C5D /* fender_stratocaster.usdz */,
 				7E49E13028244B21009F4C5D /* flower_tulip.usdz */,
-				7E49E13128244B22009F4C5D /* LemonMeringuePie.usdz */,
+				7E49E13128244B22009F4C5D /* lemon_meringue_pie.usdz */,
 				7E49E13228244B22009F4C5D /* toy_biplane.usdz */,
 				7E49E12F28244B21009F4C5D /* wateringcan.usdz */,
 			);
@@ -150,7 +150,7 @@
 			files = (
 				7EBE2EE92822CC85006A12CF /* Preview Assets.xcassets in Resources */,
 				7EBE2EE62822CC85006A12CF /* Assets.xcassets in Resources */,
-				7E49E13628244B22009F4C5D /* LemonMeringuePie.usdz in Resources */,
+				7E49E13628244B22009F4C5D /* lemon_meringue_pie.usdz in Resources */,
 				7E49E13328244B22009F4C5D /* fender_stratocaster.usdz in Resources */,
 				7E49E13528244B22009F4C5D /* flower_tulip.usdz in Resources */,
 				7E49E13428244B22009F4C5D /* wateringcan.usdz in Resources */,
