@@ -10,6 +10,9 @@ import RealityKit
 
 struct ContentView : View {
     @State private var isPlacementEnabled = false
+    @State private var selectedModel: String?
+    @State private var modelConfirmedForPlacement: String?
+    
     
     
     private var models: [String] = {
@@ -34,9 +37,9 @@ struct ContentView : View {
             ARViewContainer()
             
             if(self.isPlacementEnabled){
-                PlacementButtonsView()
+                PlacementButtonsView(isPlacementEnabled: self.$isPlacementEnabled, selectedModel: self.$selectedModel, modelConfirmedForPlacement: self.$modelConfirmedForPlacement)
             }else{
-                ModelPickerView(isPlacementEnabled: self.$isPlacementEnabled, models: self.models)
+                ModelPickerView(isPlacementEnabled: self.$isPlacementEnabled, selectedModel: self.$selectedModel, models: self.models)
             }
             
         }
@@ -58,11 +61,17 @@ struct ARViewContainer: UIViewRepresentable {
 }
 
 struct PlacementButtonsView: View {
+    @Binding var isPlacementEnabled: Bool
+    @Binding var selectedModel: String?
+    @Binding var modelConfirmedForPlacement: String?
+    
     var body: some View {
         HStack {
             //cancel button
             Button(action: {
                 print("DEBUG: model replacement canceled")
+                self.resetPlacementParameters()
+                
             }){
                 Image(systemName: "xmark")
                     .frame(width:60, height: 60)
@@ -75,6 +84,8 @@ struct PlacementButtonsView: View {
             //confirm button
             Button(action: {
                 print("DEBUG: model replacement confirmed")
+                self.modelConfirmedForPlacement = self.selectedModel
+                self.resetPlacementParameters()
             }){
                 Image(systemName: "checkmark")
                     .frame(width:60, height: 60)
@@ -85,11 +96,17 @@ struct PlacementButtonsView: View {
             }
         }
     }
+    
+    func resetPlacementParameters(){
+        self.isPlacementEnabled = false
+        self.selectedModel = nil
+    }
 }
 
 
 struct ModelPickerView: View {
     @Binding var isPlacementEnabled: Bool
+    @Binding var selectedModel: String?
     
     var models: [String]
     
@@ -100,6 +117,7 @@ struct ModelPickerView: View {
                     Button(action: {
                         print("DEBUG : selected model with name \(models[index])")
                         
+                        self.selectedModel = self.models[index]
                         self.isPlacementEnabled = true
                     }){
                         Image(uiImage: UIImage(named: models[index])!)
