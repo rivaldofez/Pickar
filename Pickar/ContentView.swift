@@ -9,6 +9,9 @@ import SwiftUI
 import RealityKit
 
 struct ContentView : View {
+    @State private var isPlacementEnabled = false
+    
+    
     private var models: [String] = {
        //dynamicly get our model filename
         let fileManager = FileManager.default
@@ -30,32 +33,10 @@ struct ContentView : View {
         ZStack(alignment: .bottom) {
             ARViewContainer()
             
-//            ModelPickerView(models: self.models)
-            
-            HStack {
-                //cancel button
-                Button(action: {
-                    print("DEBUG: model replacement canceled")
-                }){
-                    Image(systemName: "xmark")
-                        .frame(width:60, height: 60)
-                        .font(.title)
-                        .background(Color.white.opacity(0.75))
-                        .cornerRadius(30)
-                        .padding(20)
-                }
-                
-                //confirm button
-                Button(action: {
-                    print("DEBUG: model replacement confirmed")
-                }){
-                    Image(systemName: "checkmark")
-                        .frame(width:60, height: 60)
-                        .font(.title)
-                        .background(Color.white.opacity(0.75))
-                        .cornerRadius(30)
-                        .padding(20)
-                }
+            if(self.isPlacementEnabled){
+                PlacementButtonsView()
+            }else{
+                ModelPickerView(isPlacementEnabled: self.$isPlacementEnabled, models: self.models)
             }
             
         }
@@ -76,7 +57,40 @@ struct ARViewContainer: UIViewRepresentable {
     
 }
 
+struct PlacementButtonsView: View {
+    var body: some View {
+        HStack {
+            //cancel button
+            Button(action: {
+                print("DEBUG: model replacement canceled")
+            }){
+                Image(systemName: "xmark")
+                    .frame(width:60, height: 60)
+                    .font(.title)
+                    .background(Color.white.opacity(0.75))
+                    .cornerRadius(30)
+                    .padding(20)
+            }
+            
+            //confirm button
+            Button(action: {
+                print("DEBUG: model replacement confirmed")
+            }){
+                Image(systemName: "checkmark")
+                    .frame(width:60, height: 60)
+                    .font(.title)
+                    .background(Color.white.opacity(0.75))
+                    .cornerRadius(30)
+                    .padding(20)
+            }
+        }
+    }
+}
+
+
 struct ModelPickerView: View {
+    @Binding var isPlacementEnabled: Bool
+    
     var models: [String]
     
     var body: some View {
@@ -85,6 +99,8 @@ struct ModelPickerView: View {
                 ForEach(0 ..< self.models.count, id: \.self){ index in
                     Button(action: {
                         print("DEBUG : selected model with name \(models[index])")
+                        
+                        self.isPlacementEnabled = true
                     }){
                         Image(uiImage: UIImage(named: models[index])!)
                             .resizable()
